@@ -1,19 +1,18 @@
+from collections import defaultdict
 from typing import List
-
-# main_hashmap = {
-#     len(word[0]): {index: {}}
-#     len(word[1]): {index: {}}
-#
-# }
 
 
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        main_hashmap = {}
-        len_strs = len(strs)
-        for i, word in enumerate(strs):
-            words_dict = {}
+        main_hashmap = defaultdict(list)
+        for word in strs:
+            abc_list = [0] * 26
             for letter in word:
-                words_dict[letter] = 1 + words_dict.get(letter, 0)
+                abc_list[ord(letter) - ord("a")] += 1
+            main_hashmap[tuple(abc_list)].append(word)
+        return list(main_hashmap.values())
 
-            main_hashmap[len(word)] = {i: words_dict}
+
+inst = Solution()
+res = inst.groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"])
+print(res)
